@@ -9,7 +9,7 @@ $result = mysqli_query($conn,$q);
 if (isset($_POST['add'])) {
 	if (isset($_SESSION['shopping_cart']))
 	{$item_arr_id = array_column($_SESSION['shopping_cart'], 'id');
-		if (!in_array($_GET['id'],$item_arr_id)) {
+		if 	(!in_array($_GET['id'],$item_arr_id)) {
 			$num = count($_SESSION['shopping_cart']);
 			$array_of_items = array(
 			'id' => $_GET['id'],
@@ -36,5 +36,22 @@ if (isset($_POST['add'])) {
 		
 	}
 }
+
+
+//remove item from list
+if (isset($_GET['action'])) {
+	if ($_GET['action']=='delete') {
+		foreach ($_SESSION['shopping_cart'] as $key => $value) {
+			if ($value['id']==$_GET['id']) {
+				unset($_SESSION['shopping_cart'][$key]);
+				
+				echo '<script type="text/javascript">alert("Item has been removed");window.location("index.php")</script>';				
+			}
+		}
+		
+	}
+}
+
+
 
 ?>
